@@ -1,5 +1,6 @@
 /*
 Cleaning Data in SQL Queries
+Using SQL Server 2019
 */
 
 SELECT *
