@@ -1,11 +1,9 @@
 /*
-Cleaning Data in SQL Queries
-Using SQL Server 2019
+Cleaning Data in SQL using SQL Server Management Studio, Transact-SQL
 */
 
 SELECT *
 	FROM PortfolioProject..NashvilleHousing
-
 
 --------------------------------------------------
 
@@ -31,7 +29,6 @@ UPDATE NashvilleHousing
 ALTER TABLE NashvilleHousing
 	DROP COLUMN SaleDataConverted
 
-
 --------------------------------------------------
 
 -- Standardize Acreage
@@ -50,7 +47,6 @@ ALTER TABLE NashvilleHousing
 
 UPDATE NashvilleHousing
 	SET AcreageConverted = CAST(Acreage AS Decimal(5, 2))
-
 
 --------------------------------------------------
 
@@ -80,7 +76,6 @@ UPDATE a
 	AND a.[UniqueID ] <> b.[UniqueID ]
 	WHERE a.PropertyAddress IS NULL
 
-
 --------------------------------------------------
 
 -- Breaking out Address into Individual Columns (Address, City, State)
@@ -98,12 +93,10 @@ SELECT
 
 ALTER TABLE NashvilleHousing
 	ADD PropertySplitAddress nvarchar(255)
+    ADD PropertySplitCity nvarchar(255)
 
 UPDATE NashvilleHousing
 	SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) - 1)
-
-ALTER TABLE NashvilleHousing
-	ADD PropertySplitCity nvarchar(255)
 
 UPDATE NashvilleHousing
 	SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1, LEN(PropertyAddress))
@@ -112,7 +105,7 @@ SELECT *
 	FROM PortfolioProject..NashvilleHousing
 
 -- Next Up the Owner Address, using Parse Name instead of Substrings
-,
+
 SELECT OwnerAddress
 	FROM PortfolioProject..NashvilleHousing
 
@@ -124,25 +117,20 @@ SELECT
 
 ALTER TABLE NashvilleHousing
 	ADD OwnerSplitAddress nvarchar(255)
+    ADD OwnerSplitCity nvarchar(255)
+    ADD OwnerSplitState nvarchar(255)
 
 UPDATE NashvilleHousing
 	SET OwnerSplitAddress = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 3)
 
-ALTER TABLE NashvilleHousing
-	ADD OwnerSplitCity nvarchar(255)
-
 UPDATE NashvilleHousing
 	SET OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 2)
-
-ALTER TABLE NashvilleHousing
-	ADD OwnerSplitState nvarchar(255)
 
 UPDATE NashvilleHousing
 	SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
 
 SELECT *
 	FROM PortfolioProject..NashvilleHousing
-
 
 --------------------------------------------------
 
@@ -168,7 +156,6 @@ UPDATE NashvilleHousing
 	    ELSE SoldAsVacant
 	    END
 
-
 --------------------------------------------------
 
 -- Remove Duplicates - Not standard to remove data from a table, put practicing the action of.
@@ -191,11 +178,10 @@ DELETE
 	WHERE row_num > 1
 	--ORDER BY PropertyAddress
 
-
 --------------------------------------------------
 
 -- Delete Unused Columns. You don't do this to raw data that you put into your database.
--- Again, just the practice of doing so.
+-- Again, just practicing doing so.
 
 SELECT *
 	FROM PortfolioProject..NashvilleHousing
@@ -205,3 +191,6 @@ DROP COLUMN PropertyAddress, TaxDistrict, OwnerAddress, SaleDate
 
 ALTER TABLE PortfolioProject..NashvilleHousing
 DROP COLUMN Acreage
+
+SELECT *
+	FROM PortfolioProject..NashvilleHousing
