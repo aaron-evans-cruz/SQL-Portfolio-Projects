@@ -54,7 +54,6 @@ UPDATE NashvilleHousing
 
 SELECT *
 	FROM PortfolioProject..NashvilleHousing
-	--WHERE PropertyAddress is null
 	ORDER BY ParcelID
 
 SELECT a.ParcelID, 
@@ -83,8 +82,6 @@ UPDATE a
 
 SELECT PropertyAddress
 	FROM PortfolioProject..NashvilleHousing
-	--WHERE PropertyAddress is null
-	--ORDER BY ParcelID
 
 SELECT
 	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) - 1) AS Address,
