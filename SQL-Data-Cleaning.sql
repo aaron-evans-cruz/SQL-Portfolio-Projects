@@ -51,7 +51,7 @@ UPDATE NashvilleHousing
 
 --------------------------------------------------
 
--- Breaking out Address into Individual Columns (Address, City, State)
+-- Breaking out Address into Individual Columns (Address and City)
 -- First up the Property Address, using Substrings
 
 SELECT PropertyAddress
@@ -75,7 +75,8 @@ UPDATE NashvilleHousing
 SELECT *
 	FROM PortfolioProject..NashvilleHousing
 
--- Next Up the Owner Address, using Parse Name instead of Substrings
+-- Next Up the Owner Address, using Parse Name instead of Substrings. Breaking 
+-- apart Address, City and State
 
 SELECT OwnerAddress
 	FROM PortfolioProject..NashvilleHousing
