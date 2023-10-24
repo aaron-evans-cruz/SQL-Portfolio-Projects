@@ -48,32 +48,6 @@ ALTER TABLE NashvilleHousing
 UPDATE NashvilleHousing
 	SET AcreageConverted = CAST(Acreage AS Decimal(5, 2))
 
---------------------------------------------------
-
--- Populate Property Address data
-
-SELECT *
-	FROM PortfolioProject..NashvilleHousing
-	ORDER BY ParcelID
-
-SELECT a.ParcelID, 
-       a.PropertyAddress, 
-	   b.ParcelID, 
-	   b.PropertyAddress, 
-	   ISNULL(a.PropertyAddress,b.PropertyAddress)
-	FROM PortfolioProject..NashvilleHousing a
-	JOIN PortfolioProject..NashvilleHousing b
-	ON a.ParcelID = b.ParcelID
-	AND a.[UniqueID ] <> b.[UniqueID ]
-	WHERE a.PropertyAddress IS NULL
-
-UPDATE a
-	SET PropertyAddress = ISNULL(a.PropertyAddress,b.PropertyAddress)
-	FROM PortfolioProject..NashvilleHousing a
-	JOIN PortfolioProject..NashvilleHousing b
-	ON a.ParcelID = b.ParcelID
-	AND a.[UniqueID ] <> b.[UniqueID ]
-	WHERE a.PropertyAddress IS NULL
 
 --------------------------------------------------
 
